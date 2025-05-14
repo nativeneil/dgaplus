@@ -9,19 +9,23 @@
     const response = params.get("response");
     const id = params.get("id");
 
-    console.log({ response, id });
+    console.log({ response, id }); // Debugging only
 
-    const formData = new URLSearchParams();
-    formData.append("response", response);
-    formData.append("id", id);
+    const body = new URLSearchParams();
+    body.set("response", response);
+    body.set("id", id);
 
-    await fetch("https://hooks.zapier.com/hooks/catch/2308130/274a07i/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: formData.toString()
-    });
+    try {
+      await fetch("https://hooks.zapier.com/hooks/catch/2308130/274a07i/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: body
+      });
+    } catch (err) {
+      console.error("Fetch failed:", err);
+    }
 
     window.location.href = "/dgaplus/thankyou.html";
   }
