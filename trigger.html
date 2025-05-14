@@ -5,26 +5,35 @@
   <title>Sending to Zapier...</title>
 <script>
   async function sendToZapier() {
+    console.log("🔍 Script started");
+
     const params = new URLSearchParams(window.location.search);
     const response = params.get("response");
     const id = params.get("id");
 
-    console.log({ response, id }); // Debugging only
+    console.log("✅ Params extracted:", { response, id });
+
+    if (!response || !id) {
+      console.warn("⚠️ Missing query parameters");
+      return;
+    }
 
     const body = new URLSearchParams();
     body.set("response", response);
     body.set("id", id);
 
     try {
-      await fetch("https://hooks.zapier.com/hooks/catch/2308130/274a07i/", {
+      const result = await fetch("https://hooks.zapier.com/hooks/catch/2308130/274a07i/", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
         body: body
       });
+
+      console.log("📤 Sent to Zapier:", result.status);
     } catch (err) {
-      console.error("Fetch failed:", err);
+      console.error("❌ Fetch failed:", err);
     }
 
     window.location.href = "/dgaplus/thankyou.html";
