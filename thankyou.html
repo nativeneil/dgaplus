@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Processing...</title>
+<script>
+  async function sendToZapier() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const response = urlParams.get("response");
+    const id = urlParams.get("id");
+
+    await fetch("https://hooks.zapier.com/hooks/catch/2308130/274a07i/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ response, id })
+    });
+
+    window.location.href = "/thank-you.html";
+  }
+
+  sendToZapier();
+</script>
+</head>
+<body>
+  <p>Thank you</p>
+</body>
+</html>
