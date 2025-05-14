@@ -4,26 +4,29 @@
   <meta charset="UTF-8" />
   <title>Sending to Zapier...</title>
 <script>
-  async function triggerZap() {
+  async function sendToZapier() {
     const params = new URLSearchParams(window.location.search);
     const response = params.get("response");
     const id = params.get("id");
 
-    // ✅ Log values to check if they were extracted correctly
     console.log({ response, id });
+
+    const formData = new URLSearchParams();
+    formData.append("response", response);
+    formData.append("id", id);
 
     await fetch("https://hooks.zapier.com/hooks/catch/2308130/274a07i/", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: JSON.stringify({ response, id })
+      body: formData.toString()
     });
 
     window.location.href = "/dgaplus/thankyou.html";
   }
 
-  triggerZap();
+  sendToZapier();
 </script>
 </head>
 <body>
