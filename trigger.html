@@ -3,25 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <title>Sending to Zapier...</title>
-  <script>
-    async function sendToZapier() {
-      const params = new URLSearchParams(window.location.search);
-      const response = params.get("response");
-      const id = params.get("id");
+<script>
+  async function triggerZap() {
+    const params = new URLSearchParams(window.location.search);
+    const response = params.get("response");
+    const id = params.get("id");
 
-      // Send to Zapier
-      await fetch("https://hooks.zapier.com/hooks/catch/2308130/274a07i/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ response, id })
-      });
+    // ✅ Log values to check if they were extracted correctly
+    console.log({ response, id });
 
-      // Redirect to clean thank-you page
-      window.location.href = "/dgaplus/thankyou.html";
-    }
+    await fetch("https://hooks.zapier.com/hooks/catch/2308130/274a07i/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ response, id })
+    });
 
-    sendToZapier();
-  </script>
+    window.location.href = "/dgaplus/thankyou.html";
+  }
+
+  triggerZap();
+</script>
 </head>
 <body>
   <p>Processing...</p>
