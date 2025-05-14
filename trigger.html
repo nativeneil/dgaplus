@@ -36,7 +36,10 @@
       console.error("❌ Fetch failed:", err);
     }
 
-    window.location.href = "/dgaplus/thankyou.html";
+    // Delay redirect to see console logs
+    setTimeout(() => {
+      window.location.href = "/dgaplus/thankyou.html";
+    }, 2000); // 2 seconds
   }
 
   sendToZapier();
